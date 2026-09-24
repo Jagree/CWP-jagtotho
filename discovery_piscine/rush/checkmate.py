@@ -11,6 +11,7 @@ def checkmate(board):
         print("Fail")
 
 def coordinated_position(board):
+    known_pieces = ['.', 'K', 'P', 'Q', 'R', 'B']
     board_location = [] #big list
     chess_location = [] #small list
     for location in board: #add try except if board is none.
@@ -19,9 +20,11 @@ def coordinated_position(board):
             chess_location = [] 
         elif location == '.' or location == 'K' or location == 'P' or location == 'Q' or location == 'R' or location == 'B':
             chess_location.append(location)
+        elif location not in known_pieces:
+            chess_location.append('.')
         else:
             print("Error: Invalid board input.")
-            quit()
+            return
     board_location.append(chess_location)
     #print(f"This board format is {board_location}")
     return board_location
@@ -34,13 +37,13 @@ def check_format(board_row, board_location):
     for j in range(len(count_king_column)):
         if count_king_column[j] != len(board_location[0]):
             print("Error")
-            quit()
+            return
     board_column = len(board_location[0])
     #print(f"This board has {board_row} row.")
     #print(f"This board has {board_column} column.")
     if board_column != board_row:
         print("Error")
-        quit()
+        return
     return board_column
 
 def find_king(board_column, board_row, board_location):
@@ -57,10 +60,10 @@ def count_king(board_column, board_row, board_location):
                 count += 1
     if count > 1:
         print("Error: Too many king.")
-        quit()
+        return
     elif count == 0:
         print("Error: No king on the board.")
-        quit()
+        return
     else:
         return
 
