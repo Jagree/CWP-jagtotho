@@ -2,8 +2,14 @@ def checkmate(board):
     board_location = coordinated_position(board) #create location of chess using list.
     board_row = len(board_location)
     board_column = check_format(board_row, board_location) #check the square format
+
+    if board_column is None:
+        return
+    
     king_pos = find_king(board_column, board_row, board_location) #check king position
-    count_king(board_column, board_row, board_location) #check how many king
+    result = count_king(board_column, board_row, board_location) #check how many king
+    if result == -1:
+        return
     king = is_king_check(board, king_pos, board_column, board_row, board_location)
     if king == True:
         print("Success")
@@ -60,10 +66,10 @@ def count_king(board_column, board_row, board_location):
                 count += 1
     if count > 1:
         print("Error: Too many king.")
-        return
+        return -1
     elif count == 0:
         print("Error: No king on the board.")
-        return
+        return -1
     else:
         return
 
